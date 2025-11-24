@@ -49,6 +49,30 @@ services:
     depends_on:
       - database-service
 
+  account-service-3:
+    build: ./account-service-participant
+    ports:
+      - "5006:5006"
+    environment:
+      PORT: "5006"
+      NODE_ID: "4"
+    networks:
+      - banking-network
+    depends_on:
+      - database-service
+
+  account-service-4:
+    build: ./account-service-participant
+    ports:
+      - "5007:5007"
+    environment:
+      PORT: "5007"
+      NODE_ID: "5"
+    networks:
+      - banking-network
+    depends_on:
+      - database-service
+
   # Node 3: Transaction Service
   transaction-service:
     build: ./transaction-service

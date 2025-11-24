@@ -19,7 +19,9 @@ class AccountService(banking_pb2_grpc.AccountServiceServicer):
     def make_participant_stubs(self):
         stubs = []
         for host, port in [("account-service-1", 5004),
-                        ("account-service-2", 5005)]:
+                        ("account-service-2", 5005),
+                        ("account-service-3", 5006),
+                        ("account-service-4", 5007)]:
             channel = grpc.insecure_channel(f"{host}:{port}")
             stub = account_2pc_pb2_grpc.TwoPCParticipantStub(channel)
             stubs.append(stub)
