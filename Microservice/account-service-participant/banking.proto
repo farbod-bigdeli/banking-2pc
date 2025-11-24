@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package banking;
+
+// Account service definitions
+service AccountService {
+    rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+    rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
+    rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse);
+    rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
+}
+
+service TransactionService {
+    rpc TransferMoney(TransferRequest) returns (TransferResponse);
+    rpc DepositMoney(DepositRequest) returns (DepositResponse);
+    rpc WithdrawMoney(WithdrawRequest) returns (WithdrawResponse);
+    rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse);
+}
+
+service ValidationService {
+    rpc ValidateAccount(ValidateAccountRequest) returns (ValidateAccountResponse);
+    rpc ValidateTransaction(ValidateTransactionRequest) returns (ValidateTransactionResponse);
+    rpc ValidateAmount(ValidateAmountRequest) returns (ValidateAmountResponse);
+}
+
+// Account messages
+message CreateAccountRequest {
+    string name = 1;
+    string email = 2;
+    double initial_balance = 3;
+}
+
+message CreateAccountResponse {
+    string account_id = 1;
+    string name = 2;
+    string email = 3;
+    double balance = 4;
+    string created_at = 5;
+    bool success = 6;
+    string message = 7;
+}
+
+message GetAccountRequest {
+    string account_id = 1;
+}
+
+message GetAccountResponse {
+    string account_id = 1;
+    string name = 2;
+    string email = 3;
+    double balance = 4;
+    string created_at = 5;
+    bool success = 6;
+    string message = 7;
+}
+
+message ListAccountsRequest {
+    // Empty for now, could add pagination later
+}
+
+message ListAccountsResponse {
+    repeated Account accounts = 1;
+    bool success = 2;
+    string message = 3;
+}
+
+message Account {
+    string account_id = 1;
+    string name = 2;
+    string email = 3;
+    double balance = 4;
+    string created_at = 5;
+}
+
+message UpdateAccountRequest {
+    string account_id = 1;
+    string name = 2;
+    string email = 3;
+    double balance = 4;
+}
+
+message UpdateAccountResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+// Transaction messages
+message TransferRequest {
+    string from_account_id = 1;
+    string to_account_id = 2;
+    double amount = 3;
+    string description = 4;
+}
+
+message TransferResponse {
+    bool success = 1;
+    string message = 2;
+    string transaction_id = 3;
+    double from_balance = 4;
+    double to_balance = 5;
+}
+
+message DepositRequest {
+    string account_id = 1;
+    double amount = 2;
+    string description = 3;
+}
+
+message DepositResponse {
+    bool success = 1;
+    string message = 2;
+    string transaction_id = 3;
+    double new_balance = 4;
+}
+
+message WithdrawRequest {
+    string account_id = 1;
+    double amount = 2;
+    string description = 3;
+}
+
+message WithdrawResponse {
+    bool success = 1;
+    string message = 2;
+    string transaction_id = 3;
+    double new_balance = 4;
+}
+
+message GetTransactionsRequest {
+    string account_id = 1;
+}
+
+message GetTransactionsResponse {
+    repeated Transaction transactions = 1;
+    bool success = 2;
+    string message = 3;
+}
+
+message Transaction {
+    string transaction_id = 1;
+    string account_id = 2;
+    string type = 3;
+    double amount = 4;
+    string description = 5;
+    string timestamp = 6;
+}
+
+// Validation messages
+message ValidateAccountRequest {
+    string account_id = 1;
+}
+
+message ValidateAccountResponse {
+    bool is_valid = 1;
+    string message = 2;
+}
+
+message ValidateTransactionRequest {
+    string from_account_id = 1;
+    string to_account_id = 2;
+    double amount = 3;
+}
+
+message ValidateTransactionResponse {
+    bool is_valid = 1;
+    string message = 2;
+}
+
+message ValidateAmountRequest {
+    double amount = 1;
+}
+
+message ValidateAmountResponse {
+    bool is_valid = 1;
+    string message = 2;
+}
+

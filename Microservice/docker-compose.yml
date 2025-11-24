@@ -10,6 +10,8 @@ services:
       - banking-network
     depends_on:
       - account-service
+      - account-service-1
+      - account-service-2
       - transaction-service
       - validation-service
 
@@ -18,6 +20,30 @@ services:
     build: ./account-service
     ports:
       - "5001:5001"
+    networks:
+      - banking-network
+    depends_on:
+      - database-service
+
+  account-service-1:
+    build: ./account-service-participant
+    ports:
+      - "5004:5004"
+    environment:
+      PORT: "5004"
+      NODE_ID: "2"
+    networks:
+      - banking-network
+    depends_on:
+      - database-service
+
+  account-service-2:
+    build: ./account-service-participant
+    ports:
+      - "5005:5005"
+    environment:
+      PORT: "5005"
+      NODE_ID: "3"
     networks:
       - banking-network
     depends_on:

@@ -13,6 +13,7 @@ transaction_counter = 1
 
 # Shared account database - in a real system, this would be a shared database
 # For demo purposes, we'll use a simple approach
+
 accounts_db = {}
 
 # Account service connection
